@@ -25,7 +25,8 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-int		find_char(const char *str, const char c);
+int		find_char(const char *str, const char c, int size_read);
 int		char_join(char **storage, char *content);
-int		extract_line(char **storage, char **line);
+int		extract_line(char **storage, char **line, int size_read);
+size_t	ft_strlen(const char *str);
 #endif

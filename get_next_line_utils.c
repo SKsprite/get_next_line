@@ -50,7 +50,7 @@ int	char_join(char	**storage, char *content)
 	return (1);
 }
 
-int	extract_line(char **storage, char **line)
+int	extract_line(char **storage, char **line, int size_read)
 {
 	size_t	storage_size;
 	size_t	content_size;
@@ -58,7 +58,7 @@ int	extract_line(char **storage, char **line)
 	char	*allocated;
 
 	storage_size = ft_strlen(*storage);
-	content_size = find_char(*storage, NEW_LINE_CHAR);
+	content_size = find_char(*storage, NEW_LINE_CHAR, size_read);
 	*line = malloc((content_size + 1) * sizeof(char));
 	if (!*line)
 		return (0);

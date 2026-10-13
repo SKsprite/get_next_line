@@ -6,7 +6,7 @@
 /*   By: stkoh <stkoh@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 22:03:38 by stkoh             #+#    #+#             */
-/*   Updated: 2026/10/13 21:51:40 by stkoh            ###   ########.fr       */
+/*   Updated: 2026/10/14 00:19:43 by stkoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int	find_char(const char *str, const char c)
 	int	i;
 
 	i = 0;
-	while (str[i] || (unsigned char) str[i] != (unsigned char) c)
+	while (str[i] && (unsigned char) str[i] != (unsigned char) c)
 		i++;
 	if (!str[i])
 		return (-1);
+	i++;
 	return (i);
 }
 

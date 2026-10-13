@@ -6,7 +6,7 @@
 /*   By: stkoh <stkoh@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 22:06:56 by stkoh             #+#    #+#             */
-/*   Updated: 2026/10/13 21:08:15 by stkoh            ###   ########.fr       */
+/*   Updated: 2026/10/13 21:47:57 by stkoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	char_join(char	**storage, char *content)
 
 	if (!*storage)
 	{
-		*storage = malloc(1);
+		*storage = malloc(sizeof(char));
 		if (!*storage)
 			return (0);
 		(*storage)[0] = '\0';
@@ -69,9 +69,9 @@ int	extract_line(char **storage, char **line)
 	allocated[remaining] = '\0';
 	while (remaining--)
 		allocated[remaining] = (*storage)[content_size + remaining];
-	line[content_size] = '\0';
+	(*line)[content_size] = '\0';
 	while (content_size--)
-		line[content_size] = (*storage)[content_size];
+		(*line)[content_size] = (*storage)[content_size];
 	free(*storage);
 	*storage = allocated;
 	return (1);

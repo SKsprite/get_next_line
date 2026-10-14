@@ -61,11 +61,11 @@ int	extract_line(char **storage, char **line, int size_read)
 	content_size = find_char(*storage, NEW_LINE_CHAR, size_read);
 	*line = malloc((content_size + 1) * sizeof(char));
 	if (!*line)
-		return (0);
+		return (free(*storage), *storage = NULL, 0);
 	remaining = storage_size - content_size;
 	allocated = malloc((remaining + 1) * sizeof(char));
 	if (!allocated)
-		return (free(*storage), *storage = NULL, 0);
+		return (free(*line), free(*storage), *storage = NULL, 0);
 	allocated[remaining] = '\0';
 	while (remaining--)
 		allocated[remaining] = (*storage)[content_size + remaining];

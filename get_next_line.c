@@ -35,12 +35,13 @@ int	read_and_append(char **storage, char *buffer, int fd)
 {
 	ssize_t	read_size;
 
+	if (BUFFER_SIZE <= 0)
+		return (-1);
 	read_size = read(fd, buffer, BUFFER_SIZE);
-	if (read_size > 0 && char_join(storage, buffer))
+	if (read_size <= 0)
 		return (read_size);
-	else if (read_size == 0)
-		return (0);
-	return (-1);
+	buffer[read_size] = '\0';
+	return (char_join(storage, buffer));
 }
 
 char	*get_next_line(int fd)
@@ -53,15 +54,17 @@ char	*get_next_line(int fd)
 	if (fd < 0)
 		return (NULL);
 	read_size = 1;
-	while (read_size != 0 && (!line_storage || !has_new_line_char(line_storage)))
+	while (read_size != 0 && (!line_storage
+			|| !has_new_line_char(line_storage)))
 	{
 		read_size = read_and_append(&line_storage, buff, fd);
 		if (read_size < 0)
-			return (NULL);
+			return (free(line_storage), line_storage = NULL, NULL);
 	}
-	if ((read_size == 0 && !line_storage) || !extract_line(&line_storage, &line, read_size))
+	if ((read_size == 0 && !line_storage)
+		|| !extract_line(&line_storage, &line, read_size))
 		return (NULL);
-	if (read_size == 0 && ft_strlen(line_storage) == 0)
+	if (ft_strlen(line_storage) == 0)
 	{
 		free(line_storage);
 		line_storage = NULL;

@@ -6,7 +6,7 @@
 /*   By: stkoh <stkoh@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 22:03:38 by stkoh             #+#    #+#             */
-/*   Updated: 2026/10/14 00:19:43 by stkoh            ###   ########.fr       */
+/*   Updated: 2026/10/15 00:32:34 by stkoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,15 @@ int	read_and_append(char **storage, char *buffer, int fd)
 	return (char_join(storage, buffer));
 }
 
-#if BUFFER_SIZE <= 0
-
-char	*malloc_buff(char **buff)
+char	*malloc_buff(char **buff, int buffer_size)
 {
-	(void)buff;
-	return (NULL);
-}
-
-#else
-
-char	*malloc_buff(char **buff)
-{
-	*buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (buffer_size <= 0)
+		return (NULL);
+	*buff = malloc((buffer_size + 1) * sizeof(char));
 	if (!*buff)
 		return (NULL);
 	return (*buff);
 }
-#endif
 
 char	*get_next_line(int fd)
 {
@@ -68,7 +59,7 @@ char	*get_next_line(int fd)
 	if (fd < 0)
 		return (NULL);
 	read_size = 1;
-	if (!malloc_buff(&buff))
+	if (!malloc_buff(&buff, BUFFER_SIZE))
 		return (free(line_storage), line_storage = NULL, NULL);
 	while (read_size != 0 && (!line_storage
 			|| !(find_char(line_storage, NEW_LINE_CHAR, 1) >= 0)))
